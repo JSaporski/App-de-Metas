@@ -1,31 +1,14 @@
-/* Olá Mundo!
-const message = 'Olá, eu!'
-
-{
-  const message = 'Olá, Mundo!'
-}
-
-console.log(message)
-*/
-
-/* Arrays
-let metas = ['João', 'Alô']
-
-console.log(metas[1] + ', ' + metas[0])
-*/
-
-// Objetos
 let meta = {
   value: 'Ler um livro por mês',
-  address: 2,
-  checked: false,
-  log: info => {
-    console.log(info)
-  }
+  checked: true
 }
 
-meta.value = 'Não é mais ler um livro!'
-meta.log(meta.value)
+let metas = [
+  meta,
+  {
+    value: 'Caminhar 20 minutos todos os dias',
+    checked: false
+  }
+]
 
-// Function | Arrow Function
-const criarMeta = () => {}
+console.log(metas[0].value)
