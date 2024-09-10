@@ -1,6 +1,4 @@
 const start = () => {
-  let count = 1
-
   while (true) {
     let opcao = 'Sair'
 
