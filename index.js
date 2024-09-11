@@ -1,12 +1,13 @@
 const { select, input, checkbox } = require('@inquirer/prompts')
 
+let message = 'Bem vindo(a) ao app de metas!'
 let metas = []
 
 const registerGoals = async () => {
   const meta = await input({ message: 'Digite a meta:' })
 
   if (meta.length === 0) {
-    console.log('A meta não pode ser vazia.')
+    message = 'A meta não pode ser vazia.'
     return
   }
 
@@ -14,9 +15,16 @@ const registerGoals = async () => {
     value: meta,
     checked: false
   })
+
+  message = 'Meta criada com sucesso!'
 }
 
 const listGoals = async () => {
+  if (metas.length === 0) {
+    message = 'Nenhuma meta criada!'
+    return
+  }
+
   const answers = await checkbox({
     message:
       'Use as setas para mudar de meta, o espaço para marcar/desmarcar e o Enter para finalizar essa etapa',
@@ -29,7 +37,7 @@ const listGoals = async () => {
   })
 
   if (answers.length === 0) {
-    console.log('Nenhuma meta selecionada!')
+    message = 'Nenhuma meta selecionada!'
     return
   }
 
@@ -41,7 +49,7 @@ const listGoals = async () => {
     meta.checked = true
   })
 
-  console.log('Meta(s) marcadas como concluída(s)')
+  message = 'Meta(s) marcadas como concluída(s)'
 }
 
 const completedGoals = async () => {
@@ -50,7 +58,7 @@ const completedGoals = async () => {
   })
 
   if (completed.length === 0) {
-    console.log('Não existem metas realizadas! :(')
+    message = 'Não existem metas realizadas! :('
     return
   }
 
@@ -66,7 +74,7 @@ const openGoals = async () => {
   })
 
   if (open.length === 0) {
-    console.log('Não existem metas abertas, parabéns!')
+    message = 'Não existem metas abertas, parabéns!'
     return
   }
 
@@ -84,6 +92,11 @@ const deleteGoals = async () => {
     }
   })
 
+  if (metas.length === 0) {
+    message = 'Nenhum item para deletar!'
+    return
+  }
+
   const toDelete = await checkbox({
     message:
       'Use as setas para mudar de meta, o espaço para marcar/desmarcar e o Enter para finalizar essa etapa',
@@ -91,22 +104,29 @@ const deleteGoals = async () => {
     instructions: false
   })
 
-  if (toDelete.length === 0) {
-    console.log('Nenhum item para deletar!')
-    return
-  }
-
   toDelete.forEach(item => {
     metas = metasDesmarcadas.filter(meta => {
       return meta.value !== item
     })
   })
 
-  console.log('Meta(s) deletada(s) com sucesso!')
+  message = 'Meta(s) deletada(s) com sucesso!'
+}
+
+const showMessage = () => {
+  console.clear()
+
+  if (message !== '') {
+    console.log(message)
+    console.log('')
+    message = ''
+  }
 }
 
 const start = async () => {
   while (true) {
+    showMessage()
+
     const option = await select({
       message: 'Menu >',
       choices: [
