@@ -24,14 +24,14 @@ const listGoals = async () => {
     instructions: false
   })
 
+  metas.forEach(meta => {
+    meta.checked = false
+  })
+
   if (answers.length === 0) {
     console.log('Nenhuma meta selecionada!')
     return
   }
-
-  metas.forEach(meta => {
-    meta.checked = false
-  })
 
   answers.forEach(answer => {
     const meta = metas.find(m => {
