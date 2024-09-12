@@ -99,17 +99,17 @@ const openGoals = async () => {
 }
 
 const deleteGoals = async () => {
+  if (metas.length === 0) {
+    message = 'Não existem metas para serem deletadas!'
+    return
+  }
+
   const metasDesmarcadas = metas.map(meta => {
     return {
       value: meta.value,
       checked: false
     }
   })
-
-  if (metas.length === 0) {
-    message = 'Nenhum item para deletar!'
-    return
-  }
 
   const toDelete = await checkbox({
     message:
@@ -118,8 +118,13 @@ const deleteGoals = async () => {
     instructions: false
   })
 
+  if (metas.length === 0) {
+    message = 'Nenhum item para deletar!'
+    return
+  }
+
   toDelete.forEach(item => {
-    metas = metasDesmarcadas.filter(meta => {
+    metas = metas.filter(meta => {
       return meta.value !== item
     })
   })
